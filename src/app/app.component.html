@@ -1,0 +1,554 @@
+<!-- Toast Notification -->
+<div
+  class="fixed top-6 right-6 z-[100] transition-all duration-500"
+  [ngClass]="
+    toastVisible() ? 'translate-x-0 opacity-100' : 'toast-hidden opacity-0'
+  "
+>
+  <div
+    class="flex items-center gap-3 bg-trust-600 text-white px-6 py-4 rounded-xl shadow-2xl"
+  >
+    <lucide-icon [img]="icons.Award" [size]="20"></lucide-icon>
+    <span class="font-medium"
+      >Mesaj trimis cu succes! Vă voi contacta în curând.</span
+    >
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  [ngClass]="scrolled() ? 'py-3 nav-scrolled' : 'py-6'"
+>
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 group" (click)="scrollToTop()">
+      <div
+        class="w-10 h-10 rounded-lg bg-trust-500 flex items-center justify-center transition-transform group-hover:scale-110"
+      >
+        <lucide-icon
+          [img]="icons.TrendingUp"
+          [size]="22"
+          class="text-white"
+        ></lucide-icon>
+      </div>
+      <span class="text-xl font-bold text-white tracking-tight"
+        >Georgeta<span class="text-trust-500"> Balea</span></span
+      >
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      @for (link of navLinks; track link.label) {
+        <a
+          [href]="link.href"
+          class="text-slate-400 hover:text-white transition-colors duration-200 text-sm font-medium tracking-wide uppercase"
+          >{{ link.label }}</a
+        >
+      }
+      <a
+        href="#contact"
+        class="ml-4 px-6 py-2.5 bg-trust-500 hover:bg-trust-600 text-white rounded-lg font-semibold text-sm transition-all duration-200 hover:shadow-lg hover:shadow-trust-500/25"
+        >Contactează-mă</a
+      >
+    </div>
+    <button
+      class="md:hidden text-white p-2"
+      (click)="toggleMenu()"
+      aria-label="Toggle menu"
+    >
+      <lucide-icon
+        [img]="mobileMenuOpen() ? icons.X : icons.Menu"
+        [size]="24"
+      ></lucide-icon>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Overlay -->
+<div
+  class="fixed inset-0 z-40 md:hidden transition-opacity duration-300"
+  [class.pointer-events-none]="!mobileMenuOpen()"
+  [class.opacity-0]="!mobileMenuOpen()"
+  (click)="closeMenu()"
+>
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+</div>
+
+<!-- Mobile Drawer -->
+<div
+  class="fixed top-0 right-0 z-50 h-full w-72 bg-navy-800 shadow-2xl transition-transform duration-300 md:hidden flex flex-col"
+  [class.translate-x-0]="mobileMenuOpen()"
+  [class.translate-x-full]="!mobileMenuOpen()"
+>
+  <div class="flex items-center justify-between p-6 border-b border-white/10">
+    <span class="text-lg font-bold text-white">Meniu</span>
+    <button
+      (click)="closeMenu()"
+      class="text-slate-400 hover:text-white transition-colors"
+      aria-label="Close menu"
+    >
+      <lucide-icon [img]="icons.X" [size]="22"></lucide-icon>
+    </button>
+  </div>
+  <div class="flex flex-col p-6 gap-2">
+    @for (link of navLinks; track link.label) {
+      <a
+        [href]="link.href"
+        (click)="closeMenu()"
+        class="text-slate-300 hover:text-white hover:bg-white/5 px-4 py-3 rounded-lg transition-all duration-200 text-base font-medium"
+        >{{ link.label }}</a
+      >
+    }
+    <a
+      href="#contact"
+      (click)="closeMenu()"
+      class="mt-4 px-6 py-3 bg-trust-500 hover:bg-trust-600 text-white rounded-lg font-semibold text-center transition-all duration-200"
+      >Începe Acum</a
+    >
+  </div>
+</div>
+
+<!-- Hero -->
+<section
+  class="relative min-h-screen flex items-center justify-center overflow-hidden"
+>
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900"
+  ></div>
+  <div
+    class="absolute top-1/4 -left-32 w-96 h-96 bg-trust-500/10 rounded-full blur-3xl"
+  ></div>
+  <div
+    class="absolute bottom-1/4 -right-32 w-96 h-96 bg-trust-500/5 rounded-full blur-3xl"
+  ></div>
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center pt-24">
+    <div
+      class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-trust-500/10 border border-trust-500/20 mb-8"
+    >
+      <div class="w-2 h-2 rounded-full bg-trust-500 animate-pulse"></div>
+      <span class="text-trust-500 text-sm font-medium"
+        >Contabil independent în Sibiu</span
+      >
+    </div>
+    <h1
+      class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight"
+    >
+      Georgeta Balea<br />
+      <span
+        class="text-transparent bg-clip-text bg-gradient-to-r from-trust-500 to-emerald-400"
+        >Contabilul Tău</span
+      >
+    </h1>
+    <p
+      class="mt-6 text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed"
+    >
+      Sunt contabil autorizat cu peste 15 ani de experiență, stabilit în Sibiu.
+      Te ajut să ții contabilitatea la zi, să depui declarațiile la timp și să
+      iei decizii financiare informate — simplu și fără stres.
+    </p>
+    <div
+      class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+    >
+      <a
+        href="#contact"
+        class="px-8 py-4 bg-trust-500 hover:bg-trust-600 text-white rounded-xl font-semibold text-lg transition-all duration-200 hover:shadow-xl hover:shadow-trust-500/25 flex items-center gap-2 group"
+      >
+        Scrie-mi un Mesaj
+        <lucide-icon
+          [img]="icons.ChevronRight"
+          [size]="20"
+          class="transition-transform group-hover:translate-x-1"
+        ></lucide-icon>
+      </a>
+      <a
+        href="#services"
+        class="px-8 py-4 border border-white/10 hover:border-white/20 text-white rounded-xl font-semibold text-lg transition-all duration-200 hover:bg-white/5"
+        >Vezi Ce Fac</a
+      >
+    </div>
+    <div
+      class="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12 border-t border-white/5 pt-12 max-w-3xl mx-auto"
+    >
+      @for (stat of stats; track stat.label) {
+        <div class="text-center">
+          <div class="text-2xl md:text-3xl font-bold text-white">
+            {{ stat.value }}
+          </div>
+          <div class="text-sm text-slate-500 mt-1">{{ stat.label }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-24 md:py-32 relative">
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-800/50 to-navy-900"
+  ></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span
+        class="text-trust-500 text-sm font-semibold tracking-widest uppercase"
+        >Ce Fac Pentru Tine</span
+      >
+      <h2 class="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight">
+        Servicii de Contabilitate
+      </h2>
+      <p class="mt-4 text-slate-400 text-lg leading-relaxed">
+        Mă ocup de tot ce ține de contabilitate și fiscalitate, ca tu să te
+        concentrezi pe afacerea ta.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (service of services; track service.title) {
+        <div
+          class="group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 transition-all duration-300 hover:bg-white/[0.06] hover:border-trust-500/30 hover:-translate-y-1 hover:shadow-2xl hover:shadow-trust-500/5"
+        >
+          <div
+            class="w-14 h-14 rounded-xl bg-trust-500/10 flex items-center justify-center mb-6 transition-colors duration-300 group-hover:bg-trust-500/20"
+          >
+            <lucide-icon
+              [img]="service.icon"
+              [size]="28"
+              class="text-trust-500"
+            ></lucide-icon>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{ service.title }}</h3>
+          <p class="text-slate-400 leading-relaxed text-sm">
+            {{ service.description }}
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="py-24 md:py-32 relative overflow-hidden">
+  <div
+    class="absolute top-0 right-0 w-[500px] h-[500px] bg-trust-500/5 rounded-full blur-3xl"
+  ></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <span
+          class="text-trust-500 text-sm font-semibold tracking-widest uppercase"
+          >Despre Mine</span
+        >
+        <h2
+          class="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight"
+        >
+          Cine Sunt Eu
+        </h2>
+        <p class="mt-6 text-slate-400 text-lg leading-relaxed">
+          Mă numesc Georgeta Balea și sunt contabil autorizat CECCAR, cu sediul
+          în Sibiu. De peste 15 ani lucrez cu antreprenori, firme mici și
+          PFA-uri, ajutându-i să înțeleagă cifrele și să ia decizii mai bune.
+        </p>
+        <p class="mt-4 text-slate-400 text-lg leading-relaxed">
+          Lucrez direct cu fiecare client — fără intermediari, fără birocratie
+          inutilă. Cred că un contabil bun nu doar procesează documente, ci
+          devine un partener de încredere în afacerea ta.
+        </p>
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          @for (stat of stats; track stat.label) {
+            <div class="flex items-start gap-4">
+              <div
+                class="w-12 h-12 rounded-xl bg-trust-500/10 flex items-center justify-center flex-shrink-0"
+              >
+                <lucide-icon
+                  [img]="stat.icon"
+                  [size]="22"
+                  class="text-trust-500"
+                ></lucide-icon>
+              </div>
+              <div>
+                <div class="text-2xl font-bold text-white">
+                  {{ stat.value }}
+                </div>
+                <div class="text-sm text-slate-500">{{ stat.label }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="relative">
+        <div
+          class="aspect-square rounded-3xl bg-gradient-to-br from-navy-700 to-navy-800 border border-white/5 p-12 flex flex-col items-center justify-center text-center"
+        >
+          <div
+            class="w-24 h-24 rounded-2xl bg-trust-500/10 flex items-center justify-center mb-8"
+          >
+            <lucide-icon
+              [img]="icons.Shield"
+              [size]="48"
+              class="text-trust-500"
+            ></lucide-icon>
+          </div>
+          <h3 class="text-3xl font-bold text-white mb-4">
+            Totul Personal,<br />Nimic Corporatist
+          </h3>
+          <p class="text-slate-400 max-w-sm leading-relaxed">
+            Lucrez doar eu cu tine — de la preluarea documentelor până la
+            depunerea declarațiilor. Comunicare directă, transparență totală și
+            răspuns rapid.
+          </p>
+          <div class="mt-8 flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full bg-trust-500"></div>
+            <span class="text-sm text-slate-400">Expert Contabil CECCAR</span>
+            <div class="w-3 h-3 rounded-full bg-trust-500 ml-4"></div>
+            <span class="text-sm text-slate-400">Autorizat ANAF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="py-24 md:py-32 relative">
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-navy-800/50 to-transparent"
+  ></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div>
+        <span
+          class="text-trust-500 text-sm font-semibold tracking-widest uppercase"
+          >Contact</span
+        >
+        <h2
+          class="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight"
+        >
+          Hai Să Vorbim
+        </h2>
+        <p class="mt-6 text-slate-400 text-lg leading-relaxed">
+          Ai nevoie de un contabil de încredere? Scrie-mi direct și îți răspund
+          în maximum 24 de ore. Prima consultație e gratuită.
+        </p>
+        <div class="mt-10 flex flex-col gap-6">
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-trust-500/10 flex items-center justify-center flex-shrink-0"
+            >
+              <lucide-icon
+                [img]="icons.Phone"
+                [size]="20"
+                class="text-trust-500"
+              ></lucide-icon>
+            </div>
+            <div>
+              <div class="text-sm text-slate-500">Telefon</div>
+              <div class="text-white font-medium">+40 269 XXX XXX</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-trust-500/10 flex items-center justify-center flex-shrink-0"
+            >
+              <lucide-icon
+                [img]="icons.Mail"
+                [size]="20"
+                class="text-trust-500"
+              ></lucide-icon>
+            </div>
+            <div>
+              <div class="text-sm text-slate-500">Email</div>
+              <div class="text-white font-medium">
+                contact&#64;contabilsibiu.ro
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-trust-500/10 flex items-center justify-center flex-shrink-0"
+            >
+              <lucide-icon
+                [img]="icons.MapPin"
+                [size]="20"
+                class="text-trust-500"
+              ></lucide-icon>
+            </div>
+            <div>
+              <div class="text-sm text-slate-500">Birou</div>
+              <div class="text-white font-medium">
+                Sibiu, Str. Nicolae Bălcescu, Nr. 10
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 md:p-10"
+      >
+        <form (ngSubmit)="submitForm()" class="flex flex-col gap-5">
+          <div>
+            <label
+              for="name"
+              class="block text-sm font-medium text-slate-400 mb-2"
+              >Nume Complet *</label
+            >
+            <input
+              id="name"
+              type="text"
+              [ngModel]="formData().name"
+              (ngModelChange)="updateField('name', $event)"
+              (blur)="markTouched('name')"
+              name="name"
+              placeholder="Ion Popescu"
+              class="w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-trust-500 focus:ring-1 focus:ring-trust-500 transition-all duration-200"
+              [class.border-red-500]="isTouched('name') && !nameValid()"
+            />
+            @if (isTouched("name") && !nameValid()) {
+              <p class="mt-1 text-sm text-red-400">
+                Te rog introdu numele (minim 2 caractere).
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-slate-400 mb-2"
+              >Adresă Email *</label
+            >
+            <input
+              id="email"
+              type="email"
+              [ngModel]="formData().email"
+              (ngModelChange)="updateField('email', $event)"
+              (blur)="markTouched('email')"
+              name="email"
+              placeholder="ion&#64;firma.ro"
+              class="w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-trust-500 focus:ring-1 focus:ring-trust-500 transition-all duration-200"
+              [class.border-red-500]="isTouched('email') && !emailValid()"
+            />
+            @if (isTouched("email") && !emailValid()) {
+              <p class="mt-1 text-sm text-red-400">
+                Te rog introdu o adresă de email validă.
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              for="phone"
+              class="block text-sm font-medium text-slate-400 mb-2"
+              >Număr de Telefon</label
+            >
+            <input
+              id="phone"
+              type="tel"
+              [ngModel]="formData().phone"
+              (ngModelChange)="updateField('phone', $event)"
+              (blur)="markTouched('phone')"
+              name="phone"
+              placeholder="0269 XXX XXX"
+              class="w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-trust-500 focus:ring-1 focus:ring-trust-500 transition-all duration-200"
+              [class.border-red-500]="isTouched('phone') && !phoneValid()"
+            />
+            @if (isTouched("phone") && !phoneValid()) {
+              <p class="mt-1 text-sm text-red-400">
+                Te rog introdu un număr de telefon valid.
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              for="message"
+              class="block text-sm font-medium text-slate-400 mb-2"
+              >Mesaj *</label
+            >
+            <textarea
+              id="message"
+              [ngModel]="formData().message"
+              (ngModelChange)="updateField('message', $event)"
+              (blur)="markTouched('message')"
+              name="message"
+              rows="4"
+              placeholder="Spune-mi pe scurt cu ce te pot ajuta..."
+              class="w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-trust-500 focus:ring-1 focus:ring-trust-500 transition-all duration-200 resize-none"
+              [class.border-red-500]="isTouched('message') && !messageValid()"
+            ></textarea>
+            @if (isTouched("message") && !messageValid()) {
+              <p class="mt-1 text-sm text-red-400">
+                Te rog scrie cel puțin 10 caractere.
+              </p>
+            }
+          </div>
+          <button
+            type="submit"
+            [disabled]="!formValid() || formSubmitting()"
+            class="w-full mt-2 px-6 py-4 bg-trust-500 hover:bg-trust-600 disabled:bg-slate-700 disabled:cursor-not-allowed text-white rounded-xl font-semibold text-lg transition-all duration-200 hover:shadow-lg hover:shadow-trust-500/25 flex items-center justify-center gap-2"
+          >
+            @if (formSubmitting()) {
+              <div
+                class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"
+              ></div>
+              <span>Se trimite...</span>
+            } @else {
+              <lucide-icon [img]="icons.Send" [size]="20"></lucide-icon>
+              <span>Trimite Mesajul</span>
+            }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-white/5 py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col items-center text-center gap-6">
+      <div>
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <div
+            class="w-10 h-10 rounded-lg bg-trust-500 flex items-center justify-center"
+          >
+            <lucide-icon
+              [img]="icons.TrendingUp"
+              [size]="22"
+              class="text-white"
+            ></lucide-icon>
+          </div>
+          <span class="text-xl font-bold text-white tracking-tight"
+            >Georgeta<span class="text-trust-500"> Balea</span></span
+          >
+        </div>
+        <p class="text-slate-500 leading-relaxed text-sm max-w-md mx-auto">
+          Contabil autorizat în Sibiu. Te ajut cu contabilitatea, declarații
+          fiscale, salarizare și consultanță financiară.
+        </p>
+      </div>
+      <div class="flex items-center gap-6">
+        <a
+          href="#services"
+          class="text-slate-500 hover:text-trust-500 transition-colors duration-200 text-sm"
+          >Servicii</a
+        >
+        <a
+          href="#about"
+          class="text-slate-500 hover:text-trust-500 transition-colors duration-200 text-sm"
+          >Despre Mine</a
+        >
+        <a
+          href="#contact"
+          class="text-slate-500 hover:text-trust-500 transition-colors duration-200 text-sm"
+          >Contact</a
+        >
+      </div>
+    </div>
+    <div
+      class="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4"
+    >
+      <p class="text-slate-600 text-sm">
+        &copy; 2026 ContabilSibiu. Toate drepturile rezervate.
+      </p>
+      <button
+        (click)="scrollToTop()"
+        class="flex items-center gap-2 text-slate-500 hover:text-trust-500 transition-colors duration-200 text-sm"
+      >
+        Înapoi sus
+        <lucide-icon [img]="icons.ArrowUp" [size]="16"></lucide-icon>
+      </button>
+    </div>
+  </div>
+</footer>
